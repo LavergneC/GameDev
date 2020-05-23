@@ -21,3 +21,6 @@ SOURCES += \
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+LIBS += -L"$$PWD/Lib" -lSDL2main -lSDL2 -lSDL2_image -lSDL2_ttf -lfmod
+INCLUDEPATH += "$$PWD/Include"
