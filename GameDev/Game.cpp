@@ -8,32 +8,33 @@ Game::~Game()
 
 void Game::Init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen)
 {
-    int flags = 0;
+    int flag = 0;
     if(fullscreen)
     {
-        flags = SDL_WINDOW_FULLSCREEN;
+        flag = SDL_WINDOW_FULLSCREEN;
     }
 
     if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
     {
-        window = SDL_CreateWindow(title, xpos, ypos, width, height, flags);
+        isRunning = true;
+
+        window = SDL_CreateWindow(title, xpos, ypos, width, height, flag);
         if(!window)
         {
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Window init failed", NULL);
+            isRunning = false;
         }
 
         renderer = SDL_CreateRenderer(window, -1, 0);
+        SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         if(!renderer)
         {
-            SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Renderer init failed", NULL);
+            isRunning = false;
         }
-
-        isRunning = true;
     }
     else
     {
-        isRunning = false;
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "SDL init failed", NULL);
     }
 }
