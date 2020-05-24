@@ -23,7 +23,7 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
         }
 
         renderer = SDL_CreateRenderer(window, -1, 0);
-        if(renderer)
+        if(!renderer)
         {
             SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Renderer init failed", NULL);
