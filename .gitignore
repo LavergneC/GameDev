@@ -22,3 +22,6 @@
 
 #qt file
 *.user
+
+#gitignore
+GameDev/.gitignore
