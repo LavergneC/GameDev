@@ -14,7 +14,7 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
         flag = SDL_WINDOW_FULLSCREEN;
     }
 
-    if(SDL_Init(SDL_INIT_EVERYTHING) == 0)
+    if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_EVENTS|SDL_INIT_TIMER) == 0)
     {
         isRunning = true;
 
