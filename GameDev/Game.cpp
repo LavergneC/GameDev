@@ -37,6 +37,11 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
             SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", IMG_GetError(), NULL);
             isRunning = false;
         }
+        if(TTF_Init() == -1)
+        {
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", TTF_GetError(), NULL);
+            isRunning = false;
+        }
     }
     else
     {
@@ -72,6 +77,7 @@ void Game::Render()
 
 void Game::Clean()
 {
+    TTF_Quit();
     IMG_Quit();
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
