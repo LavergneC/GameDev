@@ -12,14 +12,14 @@ int main(int argc, char** argv)
 {
     game = new Game();
 
-    game->Init("Jeu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false, 32);
+    game->init("Jeu", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, false, 32);
 
-    while (game->Running())
+    while (game->running())
     {
-        game->HandleEvents();
-        game->Update();
-        game->Render();
+        game->handleEvents();
+        game->update();
+        game->render();
     }
 
-    game->Clean();
+    game->clean();
 }
