@@ -6,9 +6,10 @@ Game::Game()
 Game::~Game()
 {}
 
-void Game::Init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen)
+void Game::Init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int channels)
 {
     int flag = 0;
+    FMOD_RESULT result;
     if(fullscreen)
     {
         flag = SDL_WINDOW_FULLSCREEN;
@@ -47,6 +48,20 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
     {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "SDL init failed", NULL);
     }
+
+    result = FMOD_System_Create(&audio_system);
+    if(result != FMOD_OK)
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", FMOD_ErrorString(result), NULL);
+        isRunning = false;
+    }
+
+    result = FMOD_System_Init(audio_system, channels, FMOD_INIT_NORMAL, NULL);
+    if(result != FMOD_OK)
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", FMOD_ErrorString(result), NULL);
+        isRunning = false;
+    }
 }
 
 void Game::HandleEvents()
@@ -77,6 +92,8 @@ void Game::Render()
 
 void Game::Clean()
 {
+    FMOD_System_Close(audio_system);
+    FMOD_System_Release(audio_system);
     TTF_Quit();
     IMG_Quit();
     SDL_DestroyRenderer(renderer);
