@@ -46,7 +46,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     }
     else
     {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "SDL init failed", NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), NULL);
     }
 
     result = FMOD_System_Create(&audioSystem);
