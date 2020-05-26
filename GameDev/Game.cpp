@@ -6,7 +6,7 @@ Game::Game()
 Game::~Game()
 {}
 
-void Game::Init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int channels)
+void Game::init(const char *title, int xpos, int ypos, int width, int height, bool fullscreen, int channels)
 {
     int flag = 0;
     FMOD_RESULT result;
@@ -22,7 +22,7 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
         window = SDL_CreateWindow(title, xpos, ypos, width, height, flag);
         if(!window)
         {
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Window init failed", NULL);
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), NULL);
             isRunning = false;
         }
 
@@ -30,7 +30,7 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
         SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
         if(!renderer)
         {
-            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "Renderer init failed", NULL);
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), NULL);
             isRunning = false;
         }
         if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
@@ -46,17 +46,17 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
     }
     else
     {
-        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", "SDL init failed", NULL);
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", SDL_GetError(), NULL);
     }
 
-    result = FMOD_System_Create(&audio_system);
+    result = FMOD_System_Create(&audioSystem);
     if(result != FMOD_OK)
     {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", FMOD_ErrorString(result), NULL);
         isRunning = false;
     }
 
-    result = FMOD_System_Init(audio_system, channels, FMOD_INIT_NORMAL, NULL);
+    result = FMOD_System_Init(audioSystem, channels, FMOD_INIT_NORMAL, NULL);
     if(result != FMOD_OK)
     {
         SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Error", FMOD_ErrorString(result), NULL);
@@ -64,7 +64,7 @@ void Game::Init(const char *title, int xpos, int ypos, int width, int height, bo
     }
 }
 
-void Game::HandleEvents()
+void Game::handleEvents()
 {
     SDL_Event event;
 
@@ -80,20 +80,20 @@ void Game::HandleEvents()
     }
 }
 
-void Game::Update()
+void Game::update()
 {}
 
-void Game::Render()
+void Game::render()
 {
     SDL_RenderClear(renderer);
 
     SDL_RenderPresent(renderer);
 }
 
-void Game::Clean()
+void Game::clean()
 {
-    FMOD_System_Close(audio_system);
-    FMOD_System_Release(audio_system);
+    FMOD_System_Close(audioSystem);
+    FMOD_System_Release(audioSystem);
     TTF_Quit();
     IMG_Quit();
     SDL_DestroyRenderer(renderer);
@@ -101,7 +101,7 @@ void Game::Clean()
     SDL_Quit();
 }
 
-bool Game::Running()
+bool Game::running()
 {
     return isRunning;
 }

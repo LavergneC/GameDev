@@ -13,20 +13,20 @@ public:
     Game();
     ~Game();
 
-    void Init(const char* title ,int xpos, int ypos, int width, int height, bool fullscreen, int channels);
+    void init(const char* title ,int xpos, int ypos, int width, int height, bool fullscreen, int channels);
 
-    void HandleEvents();
-    void Update();
-    void Render();
-    void Clean();
+    void handleEvents();
+    void update();
+    void render();
+    void clean();
 
-    bool Running();
+    bool running();
 
 private:
     bool isRunning;
     SDL_Window *window;
     SDL_Renderer *renderer;
-    FMOD_SYSTEM *audio_system;
+    FMOD_SYSTEM *audioSystem;
 };
 
 #endif // GAME_H
